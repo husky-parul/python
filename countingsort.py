@@ -42,6 +42,6 @@ def countingSort(a,m,n):
 	
 	print a
 	
-countingSort([1,4,1,2,7,5,2],0,9)
+#countingSort([1,4,1,2,7,5,2],0,9)
 		
 		
