@@ -1,6 +1,15 @@
 import json
 import urllib
 
+class Result(object):
+	about=''
+	category=''
+	des=''
+	hours=''
+	phone=''
+	price=''
+	website=''
+
 class SearchApi(object):
 	id_list=[]
 	page=0
@@ -8,26 +17,22 @@ class SearchApi(object):
 	def make_request(self):
 		latt=42.353904
 		long=-71.133711
-		dist=4000
+		
 		data = {}
 		data['type'] = 'place'
-		data['distance'] = dist
-		data['access_token'] = 'EAACEdEose0cBAMiwNJ2cAyGTsNBOK5KERHzj9cdD1mnjK4DcuY8LWOKqiirtYrwXcvHZCeArO7ZAMSiZAjMofIBFdGeMas9lbHlH65Pap2kqnR5VVEM8qkZBKlcZAowZCVFIt016ZBXwkqWSzOWZC3XKO2A5pwyX2lW9M8qHsa2fhtZBiXzB6TNxO'
+		data['distance'] = 4000
+		data['access_token'] = 'EAACEdEose0cBAGn0mKHlLbM3KuqDx8p3PGdK8EAhNeCood7Ib05fv5Rk2Fa5UeE6QZAcyDmIRW1mj3lZBaISDP2tLLkhel3LpkTlzVuDuOgKwhchZAd50hxZCUD72wWzvj85YNlDoFWzalVnFLl0629770tIyZCi9iqjZCLZCLOnvqlE8XPZChkw'
 		url = "https://graph.facebook.com/v2.8/search"
 		url_values = urllib.urlencode(data)
 		new_url= url + "?" + url_values+"&center=42.353904%2c-71.133711"
 		response=urllib.urlopen(new_url)
 		result=self.get_data(new_url)
-		print len(self.id_list)
-		print self.id_list
-		self.get_data_for_id()
+		return self.get_data_for_id()
 		
 		
 	def get_data(self,url):
-		print url
 		response=urllib.urlopen(url)
 		result=json.load(response)
-		print '_____________result: ',result
 		for i in result['data']:
 			self.id_list.append(i['id'])
 		if 'paging' in result:
@@ -48,25 +53,33 @@ class SearchApi(object):
 			return
 
 	def get_data_for_id(self):
-		data={}
-		access = 'EAACEdEose0cBAMiwNJ2cAyGTsNBOK5KERHzj9cdD1mnjK4DcuY8LWOKqiirtYrwXcvHZCeArO7ZAMSiZAjMofIBFdGeMas9lbHlH65Pap2kqnR5VVEM8qkZBKlcZAowZCVFIt016ZBXwkqWSzOWZC3XKO2A5pwyX2lW9M8qHsa2fhtZBiXzB6TNxO'
+		result_list=[]
+		access = 'EAACEdEose0cBAGn0mKHlLbM3KuqDx8p3PGdK8EAhNeCood7Ib05fv5Rk2Fa5UeE6QZAcyDmIRW1mj3lZBaISDP2tLLkhel3LpkTlzVuDuOgKwhchZAd50hxZCUD72wWzvj85YNlDoFWzalVnFLl0629770tIyZCi9iqjZCLZCLOnvqlE8XPZChkw'
 		url = 'https://graph.facebook.com/v2.8/'
 		extra='?fields=about,business,category,description,features,hours,phone,price_range,website&access_token='
-		
 		for i in self.id_list:
 			newurl=url+str(i)+extra+access
-			
-			print 'url: ',newurl
 			response=urllib.urlopen(newurl)
 			result=json.load(response)
-			print '_____________result: ',result
+			result_list.append(self.extract_data(result))
+		return result_list
+		
 			
+	def extract_data(self,data):
+		obj=Result()
+		obj.about=data.get('about', [])
+		obj.category=data.get('category', [])
+		obj.des=data.get('des', [])
+		obj.hours=data.get('hours', [])
+		obj.price=data.get('price', [])
+		obj.website=data.get('website', [])
+		return obj
 		
 		
 def main():
-	print 'inside main'
 	obj=SearchApi()
-	obj.make_request()
+	result_list=obj.make_request()
+	print len(result_list)
 	
 if __name__=='__main__':
 	main()
