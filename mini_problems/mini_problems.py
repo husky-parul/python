@@ -1,3 +1,29 @@
+'''
+queue in python
+'''
+#>>> from collections import deque
+#>>> d=deque([1,2,3])
+#>>> d.append(7)
+#>>> print d
+#deque([1, 2, 3, 7])
+#>>> d.popleft()
+#1
+#>>> print d
+#deque([2, 3, 7])
+
+'''
+stack implementaion in python
+
+stack=[100,200,300]
+print stack #[100, 200, 300]
+stack.append(900)
+print stack #[100, 200, 300, 900]
+print stack.pop() #900
+
+'''
+
+
+
 #Rotate an array of n elements to the right by k steps.
 #For example, with n = 7 and k = 3, the array [1,2,3,4,5,6,7] is 
 #rotated to [5,6,7,1,2,3,4]
@@ -62,9 +88,58 @@ def twoSumUsingHT(l,sum):
 			result.update([(n,sum-n)])
 	for n in result:
 		print n
-	
+		
+#Given an array S of n integers, are there elements a, b, c in S such that a + b + c = 0?
+#Find all unique triplets in the array which gives the sum of zero.
+#Note: Elements in a triplet (a,b,c) must be in non-descending order.
+#The solution set must not contain duplicate triplets.
 
-twoSumUsingHT([-1,0,1,2,-1,-4],0)
+#Given two words (start and end), and a dictionary, find the length of shortest 
+#transformation sequence from start to end, such that only one letter can be changed at a 
+#time and each intermediate word must exist in the dictionary. For example, given:
+#start = "hit"
+#end = "cog"
+#dict = ["hot","dot","dog","lot","log"]
+import string
+from collections import deque
+def wordLadder(start,end,dict):
+	node=(start,start)
+	frontier=deque([node])
+	explored=[]
+	path=()
+	parent={start:None}
+	steps=0
+	while len(frontier)!=0:
+		word,path=frontier.popleft()
+		explored.append(word)
+		for s in word:
+			for w in string.lowercase[:26]:
+				next_word=word.replace(s,w) 
+				if next_word==end:
+					parent.update({next_word:word})
+					break
+				if next_word in dict and next_word not in explored and next_word not in frontier:
+					path=path+','+next_word
+					node=(next_word,path)
+					frontier.append(node)
+					parent.update({next_word:word})
+					
+					
+	val=parent.get(end)
+	count=0
+	while val is not None:
+		val=parent.get(val)
+		count+=1
+	print count, steps
+			
+		
+		
+		
+	
+	
+	
+wordLadder('hit','cog',["hot","dot","dog","lot","log"])
+#twoSumUsingHT([-1,0,1,2,-1,-4],0)
 						
 #isomorphic('paper','title')
 #rotate([1,2,3,4,5,6,7],3)
