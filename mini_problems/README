@@ -1,1 +1,36 @@
 Solving random small questions for practice and fun!
+1. queue in python
+
+2. stack in python
+
+3. Rotate an array of n elements to the right by k steps.
+
+4. Given two strings s and t, determine if they are isomorphic. Two strings are isomorphic
+if the characters in s can be replaced to get t. For example,"egg" and "add" are 
+isomorphic, "foo" and "bar" are not
+
+5. Given an array of integers, find two numbers such that they add up to a specific target
+number.
+
+6. #Given two words (start and end), and a dictionary, find the length of shortest 
+#transformation sequence from start to end, such that only one letter can be changed at a 
+#time and each intermediate word must exist in the dictionary. For example, given:
+#start = "hit"
+#end = "cog"
+#dict = ["hot","dot","dog","lot","log"]
+
+7. '''
+There are two sorted arrays A and B of size m and n respectively. Find the median of the 
+two sorted arrays. The overall run time complexity should be O(log (m+n)).
+'''
+
+8. '''
+Find the kth largest element in an unsorted array. Note that it is the kth largest element
+in the sorted order, not the kth distinct element.
+For example, given [3,2,1,5,6,4] and k = 2, return 5.
+
+9.'''
+Implement wildcard pattern matching with support for '?' and '*'.
+'''
+
+
