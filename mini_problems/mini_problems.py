@@ -183,7 +183,67 @@ def klargestElements(a,k):
 			ordered.append(heappop(heap))
 	print ordered[0]
 	
-klargestElements([3,2,1,5,6,4],2)
+'''
+Implement wildcard pattern matching with support for '?' and '*'.
+'''
+def wildcardMatching(text,pattern):
+	t=len(text)
+	p=len(pattern)
+	
+	# Creates a list containing t lists, each of p items, all set to False
+	T=[[False for x in range(p+1)]for y in range(t+1)]
+	
+	#base conditions: when text is empty and pattern is empty
+	if t==0 and p==0:
+		T[0][0]=True
+		return
+	
+	#when pattern is * and text is empty
+	if t==0 and p==1 and pattern[0]=='*':
+		T[0][1]=True
+		return
+	
+	#when pattern is empty but text is not
+	if p==0 and t!=0:
+		for i in range(t+1):
+			T[i][0]=False
+			return
+	
+	#initializing  T[0][] 
+	T[0][0]=True
+	for i in range(1,t+1):
+		T[i][0]=False
+	
+	#initializing  T[][0] 
+	for j in range(1,p+1):
+		if pattern[0]=='*':
+			T[0][1]=True
+		else:
+			T[0][j]=False
+	
+	#recurrence
+	it=0
+	for i in range(1,t+1):
+		pt=0
+		for j in range(1,p+1):
+			if  text[it]==pattern[pt] or pattern[pt]=='?':
+				T[i][j]=T[i-1][j-1]
+			elif pattern[pt]=='*':
+				T[i][j]=T[i-1][j] or T[i][j-1]
+			else:
+				T[i][j]=False
+			pt+=1
+		it+=1
+	
+	if T[t][p]==True:
+		print 'Matches'
+	else:
+		print 'Not Matches'
+	
+	
+wildcardMatching('xaylmz','x?y*z')
+	
+#klargestElements([3,2,1,5,6,4],2)
 #medianTwoSortedArr([1, 12, 15, 26, 38],[2, 13, 17, 30, 45])	
 #wordLadder('hit','cog',["hot","dot","dog","lot","log"])
 #twoSumUsingHT([-1,0,1,2,-1,-4],0)
