@@ -108,7 +108,6 @@ def wordLadder(start,end,dict):
 	explored=[]
 	path=()
 	parent={start:None}
-	steps=0
 	while len(frontier)!=0:
 		word,path=frontier.popleft()
 		explored.append(word)
@@ -130,15 +129,63 @@ def wordLadder(start,end,dict):
 	while val is not None:
 		val=parent.get(val)
 		count+=1
-	print count, steps
+	print count
 			
 		
-		
-		
+'''
+There are two sorted arrays A and B of size m and n respectively. Find the median of the 
+two sorted arrays. The overall run time complexity should be O(log (m+n)).
+'''
+import math
+
+def medianTwoSortedArr(a,b):
+	#print '-----------------'
+	x=int(((len(a)-1)/2))
+	y=int(((len(b)-1)/2))
+	
+	#print x,y
+	#print a[x],b[y]
+	if len(a)==len(b)==2:
+		first=max(a[0],b[0])
+		last=min(a[1],b[1])
+		#print first , last
+		print float((first+last)/2)
+		return
+	elif a[x]>b[y]:
+		c=b[y:]
+		d=a[:x+1]
+		#print 'b: ', c
+		#print 'a: ',d
+		medianTwoSortedArr(d,c)
+	elif a[x]<b[y]:
+		c=b[:y+1]
+		d=a[x:]
+		#print 'b: ', c
+		#print 'a: ',d
+		medianTwoSortedArr(d,c)
 	
 	
+'''
+Find the kth largest element in an unsorted array. Note that it is the kth largest element
+in the sorted order, not the kth distinct element.
+For example, given [3,2,1,5,6,4] and k = 2, return 5.
+'''	
+from heapq import heappush,heappop,heapify
+def klargestElements(a,k):
+	heap=[]
+	poped=[]
+	ordered=[]
+	for x in a:
+		heappush(heap,x)
+		if len(heap)>k:
+			poped.append(heappop(heap))
+	while heap:
+			ordered.append(heappop(heap))
+	print ordered[0]
 	
-wordLadder('hit','cog',["hot","dot","dog","lot","log"])
+klargestElements([3,2,1,5,6,4],2)
+#medianTwoSortedArr([1, 12, 15, 26, 38],[2, 13, 17, 30, 45])	
+#wordLadder('hit','cog',["hot","dot","dog","lot","log"])
 #twoSumUsingHT([-1,0,1,2,-1,-4],0)
 						
 #isomorphic('paper','title')
