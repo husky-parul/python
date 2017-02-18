@@ -240,9 +240,60 @@ def wildcardMatching(text,pattern):
 	else:
 		print 'Not Matches'
 	
+def regularExpressionMatching(text,pattern):
+	t=len(text)
+	p=len(pattern)
+	T=[[False for j in range(p+1)]for i in range(t+1)]
 	
-wildcardMatching('xaylmz','x?y*z')
+	# when text is null and pattern in null
+	if t==p==0:
+		print 'Matches'
+		return
+		
+	# if pattern is null but text has at least one character
 	
+	T[0][0]=True
+	for x in range(1,t+1):
+		T[x][0]=False
+		
+	if pattern[0]=='*':
+		print 'No Matching'
+		return
+		
+	T[0][0]=True
+	#if pattern has at least one element but text is empty
+	
+	for x in range(1,p+1):
+		if pattern[x-1]=='*':
+			T[0][x]=T[0][x-2]
+	
+	#all other cases
+	it=0
+	for x in range(1,t+1):
+		pt=0
+		for y in range(1,p+1):
+			if text[it]==pattern[pt] or pattern[pt]=='.':
+		 		T[x][y]=T[x-1][y-1]
+		 	elif pattern[pt]=='*':
+		 		if T[x][y-2] == True:
+		 			T[x][y]=True
+		 			break
+		 		elif text[it]==pattern[pt-1] or pattern[pt-1]=='.':
+		 			T[x][y]=T[x-1][y]
+			else:
+				T[x][y]=False
+			pt+=1
+		it+=1	
+	print T
+	if T[t][p]==True:
+		print 'Matches'
+	else:
+		print 'Not matching'	
+	
+					
+regularExpressionMatching('aab','c*a*b')	
+		
+#wildcardMatching('xaylmz','x?y*z')
 #klargestElements([3,2,1,5,6,4],2)
 #medianTwoSortedArr([1, 12, 15, 26, 38],[2, 13, 17, 30, 45])	
 #wordLadder('hit','cog',["hot","dot","dog","lot","log"])
