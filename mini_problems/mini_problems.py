@@ -439,18 +439,45 @@ def combinationSum(l,sum):
 	result.sort()
 	print result
 	
+
+def threeSum(A,sum):
+	result=()
+	A.sort()
+	for i in range(len(A)):
+		if i==0 or A[i]>A[i-1]:  #checking duplicates at i index
+			j=i+1
+			k=len(A)-1
+			print 'A[i]: ',A[i]
+			while (j<k):
+				current_sum=A[i]+A[j]+A[k]
+				if current_sum ==0:
+					result+=((A[i],A[j],A[k]),)
+					j+=1
+					k-=1
+					print 'A[j]: ',A[j]
+					print 'A[k]: ',A[k]
+					while j<k and A[j]==A[j-1]: # checking duplicates
+						j+=1
+					while j<k and A[k]==A[k+1]: # checking duplicates
+						k-=1
+				elif current_sum < 0:
+					j+=1
+				else:
+					k-=1
+		
+	print result 
+			
 	
-combinationSum([1,1,2,3,4,5],6)	
+threeSum([-1,0,1,2,-1,-4],0)
 	
+#combinationSum([1,1,2,3,4,5],6)	
 #mergeIntervals([[2,3],[1,10],[3,6],[15,18],[2,13]])
 #mergeIntervals([[2,3],[1,10],[3,6],[15,18],[2,13],[0,0]])				
 #regularExpressionMatching('aab','c*a*b')	
-		
 #wildcardMatching('xaylmz','x?y*z')
 #klargestElements([3,2,1,5,6,4],2)
 #medianTwoSortedArr([1, 12, 15, 26, 38],[2, 13, 17, 30, 45])	
 #wordLadder('hit','cog',["hot","dot","dog","lot","log"])
 #twoSumUsingHT([-1,0,1,2,-1,-4],0)
-						
 #isomorphic('paper','title')
 #rotate([1,2,3,4,5,6,7],3)
