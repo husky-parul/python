@@ -376,16 +376,16 @@ def mergeIntervals(l):
 				
 			else:
 				fuse_possible=False
-				
 				new.append(first)
-				print 'in else:first ',first, 'new: ',new
-			compare_with=(smallest,largest)
-			if fuse_possible:
 				
+			
+			compare_with=(smallest,largest)
+			
+			if fuse_possible:
 				sl[i+1]=sl[i]=compare_with
 				if last_compare!=compare_with:
 					new.append(compare_with)
-				print 'in if: compare_with',compare_with, 'new: ', new
+				
 			last_compare=compare_with
 			
 		if sl[len(sl)-1]!=last_compare:
@@ -393,19 +393,7 @@ def mergeIntervals(l):
 			
 		print 'fused: ',sl
 		print 'new: ',new
-		count=0
-		count=len(sl)-1
-		q=[]
 		
-		while count!=0:
-			if sl[count]!=sl[count-1]:
-				q.append(sl.pop())
-			else:
-				sl.pop()
-			count-=1
-			
-		
-		print 'final: ',q
 		
 	
 	sl= mergeSort(l)
