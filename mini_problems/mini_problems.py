@@ -377,7 +377,7 @@ def mergeIntervals(l):
 			else:
 				fuse_possible=False
 				new.append(first)
-				
+				print 'in else:first ',first, 'new: ',new
 			
 			compare_with=(smallest,largest)
 			
@@ -393,16 +393,56 @@ def mergeIntervals(l):
 			
 		print 'fused: ',sl
 		print 'new: ',new
+		count=0
+		count=len(sl)-1
+		q=[]
 		
+		while count!=0:
+			if sl[count]!=sl[count-1]:
+				q.append(sl.pop())
+			else:
+				sl.pop()
+			count-=1
+			
+		
+		print 'final: ',q
 		
 	
 	sl= mergeSort(l)
 	print 'sorted : ',sl
 	fuse(sl)
-			
-			
 	
-mergeIntervals([[2,3],[1,10],[3,6],[15,18],[2,13]])
+'''
+Given a collection of candidate numbers (C) and a target number (T), find all unique
+combinations in C where the candidate numbers sums to T. Each number in C may only be used
+ONCE in the combination.
+
+Note:
+1) All numbers (including target) will be positive integers.
+2) Elements in a combination must be in non-descending order. 
+3) The solution set must not contain duplicate combinations.
+'''
+			
+def combinationSum(l,sum):
+	lookup={}
+	result=[]
+	prev=-1
+	for i in range(len(l)):
+		if prev!=l[i]:
+			diff=sum-l[i]
+			if lookup.get(diff) is not None:
+				result.append(l[i])
+				result.append(diff)
+			else:
+				lookup.update({l[i]:diff})
+		prev=l[i]
+	result.sort()
+	print result
+	
+	
+combinationSum([1,1,2,3,4,5],6)	
+	
+#mergeIntervals([[2,3],[1,10],[3,6],[15,18],[2,13]])
 #mergeIntervals([[2,3],[1,10],[3,6],[15,18],[2,13],[0,0]])				
 #regularExpressionMatching('aab','c*a*b')	
 		
