@@ -43,5 +43,5 @@ def merge(l1,l2):
 	
 	
 
-#print 'sorted array: ', mergeSort([14,33,27,10,35,19,42,44])
+print 'sorted array: ', mergeSort([14,33,27,10,35,19])
 	

@@ -239,7 +239,12 @@ def wildcardMatching(text,pattern):
 		print 'Matches'
 	else:
 		print 'Not Matches'
-	
+
+'''
+Implement regular expression matching with support for '.' and '*'.
+'.' Matches any single character.
+'*' Matches zero or more of the preceding element.
+'''	
 def regularExpressionMatching(text,pattern):
 	t=len(text)
 	p=len(pattern)
@@ -288,10 +293,130 @@ def regularExpressionMatching(text,pattern):
 	if T[t][p]==True:
 		print 'Matches'
 	else:
-		print 'Not matching'	
+		print 'Not matching'
+		
+'''
+Given a collection of intervals, merge all overlapping intervals.
+For example, Given [1,3],[2,6],[8,10],[15,18]
+return [1,6],[8,10],[15,18].
+'''
+
+def mergeIntervals(l):
+	from math import ceil,floor
+	from collections import deque
 	
+	def mergeSort(l):
+		n=int(ceil(len(l)/2))
+		
+		
+		if len(l)==1:
+			return l
+		l1=l[:n]
+		l2=l[n:]
+		#print n
+		#print l1
+		#print l2
+		#print '_______________'
+		l1=mergeSort(l1)
+		l2=mergeSort(l2)
+		
+		
+		return merge(l1,l2)
+		
+	def merge(l1,l2):
+		c=[]
+		#print 'l1: ', l1
+		#print 'l2: ',l2
+		while l1 and l2:
+			e1=l1[0]
+			e2=l2[0]
+			if e1[0] < e2[0]:
+				c.append(e1)
+				l1.remove(e1)
+			elif e1[0] > e2[0]:
+				c.append(e2)
+				l2.remove(e2)
+			elif e1[0]==e2[0]:
+				if e1[1]<=e2[1]:
+					c.append(e1)
+					l1.remove(e1)
+				else:
+					c.append(e2)
+					l2.remove(e2)
 					
-regularExpressionMatching('aab','c*a*b')	
+		while l1:
+			c.append(l1[0])
+			l1.remove(l1[0])
+		while len(l2)!=0:
+			c.append(l2[0])
+			l2.remove(l2[0])
+		
+		return c
+		
+	#sl= mergeSort([[2,3],[1,10],[3,6],[15,18],[2,13],[0,0]])
+	
+	def fuse(sl):
+		new=[]
+		fuse_possible=False
+		last_compare=(None,None)
+		for i in range(len(sl)-1):
+			first=sl[i]
+			last=sl[i+1]
+			largest=0
+			smallest=0
+			if first[1] < last[1] and first[1] > last[0]:
+				largest=last[1]
+				smallest=first[0]
+				fuse_possible=True
+				
+			elif first[1] > last[1] and last[0] > first[0]:
+				largest=first[1]
+				smallest=first[0]
+				fuse_possible=True
+				
+			else:
+				fuse_possible=False
+				
+				new.append(first)
+				print 'in else:first ',first, 'new: ',new
+			compare_with=(smallest,largest)
+			if fuse_possible:
+				
+				sl[i+1]=sl[i]=compare_with
+				if last_compare!=compare_with:
+					new.append(compare_with)
+				print 'in if: compare_with',compare_with, 'new: ', new
+			last_compare=compare_with
+			
+		if sl[len(sl)-1]!=last_compare:
+			new.append(sl[len(sl)-1])
+			
+		print 'fused: ',sl
+		print 'new: ',new
+		count=0
+		count=len(sl)-1
+		q=[]
+		
+		while count!=0:
+			if sl[count]!=sl[count-1]:
+				q.append(sl.pop())
+			else:
+				sl.pop()
+			count-=1
+			
+		
+		print 'final: ',q
+		
+	
+	sl= mergeSort(l)
+	print 'sorted : ',sl
+	fuse(sl)
+			
+			
+	
+mergeIntervals([[2,3],[1,10],[3,6],[15,18],[2,13]])
+#mergeIntervals([[2,3],[1,10],[3,6],[15,18],[2,13],[0,0]])				
+#regularExpressionMatching('aab','c*a*b')	
 		
 #wildcardMatching('xaylmz','x?y*z')
 #klargestElements([3,2,1,5,6,4],2)

@@ -39,4 +39,9 @@ Implement regular expression matching with support for '.' and '*'.
 '*' Matches zero or more of the preceding element.
 '''
 
+11. '''
+Given a collection of intervals, merge all overlapping intervals.
+For example, Given [1,3],[2,6],[8,10],[15,18
+'''
+
 
