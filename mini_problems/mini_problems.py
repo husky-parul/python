@@ -439,7 +439,17 @@ def combinationSum(l,sum):
 	result.sort()
 	print result
 	
-
+'''
+Given an array S of n integers, are there elements a, b, c in S such that a + b + c = 0
+Find all unique triplets in the array which gives the sum of zero.
+Note:
+Elements in a triplet (a,b,c) must be in non-descending order. 
+The solution set must not contain duplicate triplets.
+For example, given array S = {-1 0 1 2 -1 -4},
+A solution set is:
+(-1, 0, 1)
+(-1, -1, 2)
+'''
 def threeSum(A,sum):
 	result=()
 	A.sort()
@@ -447,15 +457,12 @@ def threeSum(A,sum):
 		if i==0 or A[i]>A[i-1]:  #checking duplicates at i index
 			j=i+1
 			k=len(A)-1
-			print 'A[i]: ',A[i]
 			while (j<k):
 				current_sum=A[i]+A[j]+A[k]
 				if current_sum ==0:
 					result+=((A[i],A[j],A[k]),)
 					j+=1
 					k-=1
-					print 'A[j]: ',A[j]
-					print 'A[k]: ',A[k]
 					while j<k and A[j]==A[j-1]: # checking duplicates
 						j+=1
 					while j<k and A[k]==A[k+1]: # checking duplicates
@@ -464,12 +471,46 @@ def threeSum(A,sum):
 					j+=1
 				else:
 					k-=1
-		
-	print result 
+	return result
+'''
+Given an array S of n integers, are there elements a, b, c, and d in S such that 
+a + b + c + d = target? Find all unique quadruplets in the array which gives the sum of target.
+Note:
+Elements in a quadruplet (a,b,c,d) must be in non-descending order.
+The solution set must not contain duplicate quadruplets.
+For example, given array S = {1 0 -1 0 -2 2}, and target = 0.
+
+A solution set is:
+(-1,  0, 0, 1)
+(-2, -1, 1, 2)
+(-2,  0, 0, 2)
+'''
+def ksum(A,sum,x):
+	result=()
+	A.sort()
+	for i in range(len(A)-3):
+		for j in range(i+1,len(A)-2):
+				k=j+1
+				l=len(A)-1
+				while k<l:
+					current_sum=A[i]+A[j]+A[k]+A[l]
+					if current_sum==sum:
+						result+=(A[i],A[j],A[k],A[l]),
+						k+=1
+						l-=1
+						while k<l and A[k]==A[k-1]:
+							k+=1
+						while k<l and A[l]==A[l+1]:
+							l-=1
+					elif current_sum<sum:
+						k+=1
+					else:
+						l-=1
+	r=set(result)
+	return r
 			
-	
-threeSum([-1,0,1,2,-1,-4],0)
-	
+#print ksum([1, 0, -1, 0, -2, 2],0,0)
+#print threeSum([-1,0,1,2,-1,-4],0)
 #combinationSum([1,1,2,3,4,5],6)	
 #mergeIntervals([[2,3],[1,10],[3,6],[15,18],[2,13]])
 #mergeIntervals([[2,3],[1,10],[3,6],[15,18],[2,13],[0,0]])				
