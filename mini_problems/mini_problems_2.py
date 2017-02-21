@@ -130,7 +130,73 @@ def minSubarraySum(l,k):
 			start+=1
 	return min_length
 	
-print minSubarraySum([1, 11, 100, 1, 0, 200, 3, 2, 1, 250],280)
+#print minSubarraySum([1, 11, 100, 1, 0, 200, 3, 2, 1, 250],280)
+
+'''
+Given a sorted array, remove the duplicates in place such that each element appear
+only once and return the new length. Do not allocate extra space for another array,
+you must do this in place with constant memory.
+For example, given input array A = [1,1,2], your function should return length = 2,
+and A is now [1,2].
+'''
+
+def removeDupFromSortedArray(l):
+	i=0
+	j=1
+	n=len(l)-1
+	last=float('-inf')
+	while j<n:
+		if l[i]==l[j]:
+			j+=1
+			
+		else:
+			
+			i+=1
+			l[i],l[j]=l[j],l[i]
+			j+=1
+			last=i
+	
+	i =0
+	count=n-last
+	
+	while i<count:
+		l.pop()
+		i+=1
+	return l
+	
+#print removeDupFromSortedArray([1,1,1,1,2,2,3,3,3,3])
+
+'''
+Follow up for "Remove Duplicates": What if duplicates are allowed at most twice?
+For example, given sorted array A = [1,1,1,2,2,3], your function should return length
+= 5, and A is now [1,1,2,2,3].
+So this problem also requires in-place array manipulation.
+'''
+def dupTwice(l):
+	prev=l[0]
+	flag=False
+	count=0
+	o=1
+	for i in range(len(l)):
+		cur=l[i]
+		if cur==prev:
+			if not flag:
+				l[o]=cur
+				flag=True
+				o+=1
+				continue
+			else:
+				count+=1
+		else:
+			prev=cur
+			l[o]=cur
+			o+=1
+			flag=False
+	num_of_elements=len(l)-count+1
+	return l[:num_of_elements]
+				
+print dupTwice([1,1,1,2,2,2,2,3,3])			
+			
 	
 	
 	
