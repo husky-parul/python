@@ -50,14 +50,14 @@ def maxSubarraySum(l):
 	#print 'ans: ',ans
 	#print 'lsum+rsum: ',lsum+rsum
 	return max(ans,lsum+rsum)
-	
+'''	
 print maxSubarraySum([-2,-3,4,-1,-2,1])
 print maxSubarraySum([-2,3,2,-1])
 print maxSubarraySum([-1, 4, -2, 5, -5, 2, -20, 6])
 print maxSubarraySum([-10, -4, -2, -5, -5, -1, -20, -6])
 print maxSubarraySum([1,-3,2,-5,7,6,-1,-4,11,-23])
 print ('-------------------------------------------------')
-'''
+
 Maximum Subarray Sum
 Does not work for negative numbers
 Time complexity O(n)
@@ -96,10 +96,44 @@ def maxSubarraySumKadane_(l):
 		return max_val
 	else:
 		return max_so_far
-
+'''
 print maxSubarraySumKadane_([-2,-3,4,-1,-2,1])
 print maxSubarraySumKadane_([-2,3,2,-1])
 print maxSubarraySumKadane_([-1, 4, -2, 5, -5, 2, -20, 6])
 print maxSubarraySumKadane_([-10, -4, -2, -5, -5, -1, -20, -6])
 print maxSubarraySumKadane_([1,-3,2,-5,7,6,-1,-4,11,-23])
+'''
+'''
+Given an array of n positive integers and a positive integer s, find the minimal length
+of a subarray of which the sum gte s. If there isnt one, return 0 instead.
+'''
+def minSubarraySum(l,k):
+	n=len(l)
+	min_length=n+1
+	start=end=cur_sum=0
+	while end<n :
+		while end<n and cur_sum<=k:
+			print 'end: ',end
+			print 'cur_sum: ',cur_sum
+			cur_sum+=l[end]
+			print 'cur_sum: ',cur_sum
+			end+=1
+			print 'end: ',end
+		while cur_sum>k and start<n:
+			if end-start < min_length:
+				min_length=end-start
+				print 'min_lenght: ',min_length
+			print 'start: ',start
+			print 'cur_sum: ',cur_sum
+			cur_sum-=l[start]
+			print 'cur_sum: ',cur_sum
+			start+=1
+	return min_length
+	
+print minSubarraySum([1, 11, 100, 1, 0, 200, 3, 2, 1, 250],280)
+	
+	
+	
+	
+		
 
