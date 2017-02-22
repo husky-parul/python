@@ -195,7 +195,48 @@ def dupTwice(l):
 	num_of_elements=len(l)-count+1
 	return l[:num_of_elements]
 				
-print dupTwice([1,1,1,2,2,2,2,3,3])			
+#print dupTwice([1,1,1,2,2,2,2,3,3])		
+
+def dupTwice_(A):
+	if len(A)<=2:
+		return A
+	cur=2
+	pre=1
+	n=len(A)
+	while cur<n:
+		if A[cur]==A[pre] and A[cur]==A[pre-1]:
+			cur+=1
+		else:
+			pre+=1
+			A[pre]=A[cur]
+			cur+=1
+			
+	return A[:pre+1]
+
+#print dupTwice_([1,1,1,2,2,3,3])
+
+def removeElements(l,val):
+	i=0
+	j=1
+	n=len(l)-1
+	while j	<=n:
+		if l[i]==val and l[j]!=l[i]:
+			if l[j]==val:
+				j+=1
+			else:
+				l[i],l[j]=l[j],l[i]
+				j+=1
+				i+=1
+		else:
+			i+=1
+			j+=1
+			
+	return l, i
+print 	removeElements([1,2,1,3,5,2,1],2)
+		
+
+
+		
 			
 	
 	
